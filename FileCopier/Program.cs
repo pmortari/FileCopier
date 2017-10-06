@@ -24,7 +24,7 @@ namespace FileCopier
 
             try
             {
-                if (VerifyDestinationPath())
+                if (DestinationPathExists() == false)
                 {
                     Log.Info($"Destination path does not exist. The folder will be created on: {DestinationPath}");
 
@@ -52,7 +52,7 @@ namespace FileCopier
                 var sourceFile = Path.Combine(SourcePath, fileName);
                 var destinationFile = Path.Combine(DestinationPath, fileName);
 
-                if (VerifySourceFile(sourceFile))
+                if (SourceFileExists(sourceFile))
                 {
                     if (NeedsToUpdateFile(destinationFile))
                     {
@@ -96,14 +96,14 @@ namespace FileCopier
             return needsToUpdate;
         }
 
-        private static bool VerifyDestinationPath()
+        private static bool DestinationPathExists()
         {
             var exists = Directory.Exists(DestinationPath);
 
-            return !exists;
+            return exists;
         }
 
-        private static bool VerifySourceFile(string sourceFile)
+        private static bool SourceFileExists(string sourceFile)
         {
             var exists = File.Exists(sourceFile);
 
